@@ -1,0 +1,32 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "8e562ab0d28b3f16467306efd37d2bfb"
+application_url = "https://smilies-potentially-focal-producers.trycloudflare.com"
+embedded = true
+name = "Product Blocks"
+handle = "product-blocks-4"
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://smilies-potentially-focal-producers.trycloudflare.com/auth/callback",
+  "https://smilies-potentially-focal-producers.trycloudflare.com/auth/shopify/callback",
+  "https://smilies-potentially-focal-producers.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
+
+[build]
+dev_store_url = "fur-featherss.myshopify.com"
+automatically_update_urls_on_dev = true
