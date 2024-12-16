@@ -1,0 +1,150 @@
+{% liquid
+  assign divider_color = block.settings.divider_color
+  assign divider_height = block.settings.divider_height | append: 'px'
+
+  assign divider_text = block.settings.divider_text
+  assign divider_text_color = block.settings.divider_text_color
+  assign divider_text_size = block.settings.divider_text_size
+
+  assign divider_margin_top = block.settings.divider_margin_top
+  assign divider_margin_bottom = block.settings.divider_margin_bottom
+
+  assign font_size = 14
+  if divider_text_size == 'small'
+    assign font_size = 12
+  elsif divider_text_size == 'large'
+    assign font_size = 16
+  endif
+%}
+
+<style>
+        .vcb-divider--{{ block.id }} {
+            margin-top: {{ divider_margin_top }}px;
+            margin-bottom: {{ divider_margin_bottom }}px;
+        }
+
+        .vcb-divider-text {
+            display: flex;
+            align-items: center;
+            color: {{ divider_text_color }};
+            font-size: {{ font_size |  append: 'px' }};
+        }
+
+  .vcb-divider-text::before, .vcb-divider-text::after {
+      flex: 1;
+      content: '';
+      padding: {{ divider_height }};
+      background-color: {{ divider_color }};
+      margin: 5px;
+      border-radius: 3px;
+    }
+</style>
+
+<div class="vcb-divider vcb-divider--{{ block.id }}">
+  {% if divider_text != blank %}
+    <div class="vcb-divider-text">
+      {{ divider_text }}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Divider",
+  "target": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Divider Line"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "divider_height",
+      "label": "Height",
+      "default": "0.5",
+      "options": [
+        {
+          "value": "0.5",
+          "label": "Thin"
+        },
+        {
+          "value": "1",
+          "label": "Medium"
+        },
+        {
+          "value": "2",
+          "label": "Thick"
+        }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "Text",
+      "info": "This is optional. The text will be displayed at the center of the divider, between the two lines."
+    },
+
+    {
+      "type": "inline_richtext",
+      "id": "divider_text",
+      "label": "Text",
+      "default": "OR"
+    },
+    {
+      "type": "color",
+      "id": "divider_text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "divider_text_size",
+      "label": "Text Size",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "Margin"
+    },
+    {
+      "type": "range",
+      "id": "divider_margin_top",
+      "label": "Top Margin",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "divider_margin_bottom",
+      "label": "Bottom Margin",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 10
+    }
+  ]
+}
+{% endschema %}

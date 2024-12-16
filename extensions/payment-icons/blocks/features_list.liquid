@@ -1,0 +1,149 @@
+{% liquid
+  assign block_count = 0
+  assign first_feature = block.settings.first_feature
+  if first_feature != blank
+    assign block_count = block_count | plus: 1
+  endif
+  assign second_feature = block.settings.second_feature
+  if second_feature != blank
+    assign block_count = block_count | plus: 1
+  endif
+
+  assign third_feature = block.settings.third_feature
+  if third_feature != blank
+    assign block_count = block_count | plus: 1
+  endif
+  assign fourth_feature = block.settings.fourth_feature
+  if fourth_feature != blank
+    assign block_count = block_count | plus: 1
+  endif
+
+  assign font_size = '14px'
+  assign icon_size = '20px'
+  if block.settings.text_size == 'small'
+    assign font_size = '12px'
+    assign icon_size = '16px'
+  elsif block.settings.text_size == 'large'
+    assign font_size = '16px'
+    assign icon_size = '24px'
+  endif
+%}
+
+<style>
+  .vcb-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .vcb-features-list__item {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .vcb-features-list__text{
+    font-size: {{ font_size }};
+    color: {{ block.settings.text_color }};
+    {% if block.settings.bold_text %}
+      font-weight: bold;
+    {% endif %}
+    line-height: 1;
+  }
+
+
+  .vcb-features-list__icon{
+    display: flex;
+  }
+
+  .vcb-features-list__icon svg {
+    height: {{ icon_size }};
+    width: {{ icon_size }};
+    fill: {{ block.settings.icon_color }};
+    color: #ffffff
+  }
+</style>
+
+<div class="vcb-features-list vcb-features-list--{{ block_count }}">
+  {% if first_feature != blank %}
+    <div class="vcb-features-list__item">
+      <span class="vcb-features-list__icon">
+        {% render 'icon', icon: 'check-circle' %}
+      </span>
+      <span class="vcb-features-list__text">{{ first_feature }}</span>
+    </div>
+  {% endif %}
+
+  {% if second_feature != blank %}
+    <div class="vcb-features-list__item">
+      <span class="vcb-features-list__icon">
+        {% render 'icon', icon: 'check-circle' %}
+      </span>
+      <span class="vcb-features-list__text">{{ second_feature }}</span>
+    </div>
+  {% endif %}
+
+  {% if third_feature != blank %}
+    <div class="vcb-features-list__item">
+      <span class="vcb-features-list__icon">
+        {% render 'icon', icon: 'check-circle' %}
+      </span>
+      <span class="vcb-features-list__text">{{ third_feature }}</span>
+    </div>
+  {% endif %}
+
+  {% if fourth_feature != blank %}
+    <div class="vcb-features-list__item">
+      <span class="vcb-features-list__icon">
+        {% render 'icon', icon: 'check-circle' %}
+      </span>
+      <span class="vcb-features-list__text">{{ fourth_feature }}</span>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Features List",
+  "target": "section",
+  "templates": ["product"],
+  "settings": [
+    { "type": "header", "content": "Features List" },
+    { "type": "text", "id": "first_feature", "label": "First Feature" },
+    { "type": "text", "id": "second_feature", "label": "Second Feature" },
+    { "type": "text", "id": "third_feature", "label": "Third Feature" },
+    { "type": "text", "id": "fourth_feature", "label": "Fourth Feature" },
+    { "type": "header", "content": "Colors" },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#94E846"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    { "type": "header", "content": "Typography" },
+    {
+      "type": "checkbox",
+      "id": "bold_text",
+      "label": "Bold Text",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text Size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    }
+  ]
+}
+{% endschema %}

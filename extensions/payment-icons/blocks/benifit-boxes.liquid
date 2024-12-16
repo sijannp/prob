@@ -1,0 +1,299 @@
+{% liquid
+  assign first_benifit = block.settings.first_benifit
+  assign first_benifit_icon = block.settings.first_benifit_icon
+  assign first_benifit_image = block.settings.first_benifit_image
+  assign second_benifit = block.settings.second_benifit
+  assign second_benifit_icon = block.settings.second_benifit_icon
+  assign second_benifit_image = block.settings.second_benifit_image
+  assign third_benifit = block.settings.third_benifit
+  assign third_benifit_icon = block.settings.third_benifit_icon
+  assign third_benifit_image = block.settings.third_benifit_image
+  assign fourth_benifit = block.settings.fourth_benifit
+  assign fourth_benifit_icon = block.settings.fourth_benifit_icon
+  assign fourth_benifit_image = block.settings.fourth_benifit_image
+
+  assign icon_color = block.settings.icon_color
+  assign text_color = block.settings.text_color
+  assign background_color = block.settings.background_color
+
+  assign bold_text = block.settings.bold_text
+
+  assign text_size = 14
+  assign icon_size = 20
+  if block.settings.text_size == 'small'
+    assign text_size = 12
+    assign icon_size = 16
+  elsif block.settings.text_size == 'large'
+    assign text_size = 16
+    assign icon_size = 24
+  endif
+%}
+
+<style>
+  .vcb-benifit-boxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .vcb-benifit-box {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #f9f9f9;
+    background-color: {{ background_color }}
+  }
+
+  .vcb-benifit-box__text {
+    font-size: {{ text_size | append: 'px' }};
+    color: {{ text_color }};
+    {% if bold_text %}
+      font-weight: bold;
+    {% endif %}
+    line-height: 1;
+  }
+
+  .vcb-benifit-box__icon {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .vcb-benifit-box__icon svg {
+    height: {{ icon_size | append: 'px' }};
+    width: {{ icon_size | append: 'px' }};
+    color: {{ icon_color }};
+  }
+
+  .vcb-benifit-box__icon img {
+    height: 20px;
+  }
+</style>
+
+<div class="vcb-benifit-boxes">
+  {% if first_benifit != blank %}
+    <div class="vcb-benifit-box">
+      <span class="vcb-benifit-box__icon">
+        {% if first_benifit_image %}
+          {{ first_benifit_image | image_url: width: '20px' | image_tag: loading: 'lazy' }}
+        {% else %}
+          {% render 'icon', icon: first_benifit_icon %}
+        {% endif %}
+      </span>
+      <span class="vcb-benifit-box__text">{{ first_benifit }}</span>
+    </div>
+  {% endif %}
+
+  {% if second_benifit != blank %}
+    <div class="vcb-benifit-box">
+      <span class="vcb-benifit-box__icon">
+        {% if second_benifit_image %}
+          {{ second_benifit_image | image_url: width: '20px' | image_tag: loading: 'lazy' }}
+        {% else %}
+          {% render 'icon', icon: second_benifit_icon %}
+        {% endif %}
+      </span>
+      <span class="vcb-benifit-box__text">{{ second_benifit }}</span>
+    </div>
+  {% endif %}
+
+  {% if third_benifit != blank %}
+    <div class="vcb-benifit-box">
+      <span class="vcb-benifit-box__icon">
+        {% if third_benifit_image %}
+          {{ third_benifit_image | image_url: width: '20px' | image_tag: loading: 'lazy' }}
+        {% else %}
+          {% render 'icon', icon: third_benifit_icon %}
+        {% endif %}
+      </span>
+      <span class="vcb-benifit-box__text">{{ third_benifit }}</span>
+    </div>
+  {% endif %}
+
+  {% if fourth_benifit != blank %}
+    <div class="vcb-benifit-box">
+      <span class="vcb-benifit-box__icon">
+        {% if fourth_benifit_image %}
+          {{ fourth_benifit_image | image_url: width: '20px' | image_tag: loading: 'lazy' }}
+        {% else %}
+          {% render 'icon', icon: fourth_benifit_icon %}
+        {% endif %}
+      </span>
+      <span class="vcb-benifit-box__text">{{ fourth_benifit }}</span>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Benifit Boxes",
+  "target": "section",
+  "templates": ["product"],
+  "settings": [
+    {
+      "type": "header",
+      "content": "First Benifit"
+    },
+    {
+      "type": "text",
+      "id": "first_benifit",
+      "label": "First Benifit",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "select",
+      "id": "first_benifit_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "check-circle", "label": "Check Circle" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "thumbs-up", "label": "Thumbs Up" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "sparkles", "label": "Sparkles" },
+        { "value": "tag", "label": "Tag" },
+        { "value": "chat", "label": "Chat" },
+        { "value": "gift", "label": "Gift" },
+        { "value": "shield-check", "label": "Shield Check" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "first_benifit_image",
+      "label": "Or use an image"
+    },
+    {
+      "type": "text",
+      "id": "second_benifit",
+      "label": "Second Benifit",
+      "default": "Free Returns"
+    },
+    {
+      "type": "select",
+      "id": "second_benifit_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "check-circle", "label": "Check Circle" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "thumbs-up", "label": "Thumbs Up" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "sparkles", "label": "Sparkles" },
+        { "value": "tag", "label": "Tag" },
+        { "value": "chat", "label": "Chat" },
+        { "value": "gift", "label": "Gift" },
+        { "value": "shield-check", "label": "Shield Check" }
+      ],
+      "default": "star"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "second_benifit_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "third_benifit",
+      "label": "Third Benifit",
+      "default": "24/7 Support"
+    },
+    {
+      "type": "select",
+      "id": "third_benifit_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "check-circle", "label": "Check Circle" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "thumbs-up", "label": "Thumbs Up" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "sparkles", "label": "Sparkles" },
+        { "value": "tag", "label": "Tag" },
+        { "value": "chat", "label": "Chat" },
+        { "value": "gift", "label": "Gift" },
+        { "value": "shield-check", "label": "Shield Check" }
+      ],
+      "default": "chat"
+    },
+    {
+      "type": "image_picker",
+      "id": "third_benifit_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "fourth_benifit",
+      "label": "Fourth Benifit",
+      "default": "Secure Payments"
+    },
+    {
+      "type": "select",
+      "id": "fourth_benifit_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "check-circle", "label": "Check Circle" },
+        { "value": "star", "label": "Star" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "thumbs-up", "label": "Thumbs Up" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "sparkles", "label": "Sparkles" },
+        { "value": "tag", "label": "Tag" },
+        { "value": "chat", "label": "Chat" },
+        { "value": "gift", "label": "Gift" },
+        { "value": "shield-check", "label": "Shield Check" }
+      ],
+      "default": "shield-check"
+    },
+    {
+      "type": "image_picker",
+      "id": "fourth_benifit_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Card Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#94E846"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "checkbox",
+      "id": "bold_text",
+      "label": "Bold Text",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text Size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    }
+  ]
+}
+{% endschema %}
